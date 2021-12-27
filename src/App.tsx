@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import "./styles/global.scss";
 
@@ -8,9 +8,12 @@ import { SideBar } from "./components/SideBar";
 export function App() {
   const [selectedGenreId, setSelectedGenreId] = useState(1);
 
-  function handleClickButton(id: number) {
-    setSelectedGenreId(id);
-  }
+  const handleClickButton = useCallback(
+    (id: number) => {
+      setSelectedGenreId(id);
+    },
+    [selectedGenreId]
+  );
 
   return (
     <div style={{ display: "flex", flexDirection: "row" }}>

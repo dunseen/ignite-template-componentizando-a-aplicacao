@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { api } from "../services/api";
 import { MovieCard } from "./MovieCard";
 
@@ -25,7 +25,7 @@ interface ContentProps {
   selectedGenreId: number;
 }
 
-export function Content({ selectedGenreId }: ContentProps) {
+function ContentMemoized({ selectedGenreId }: ContentProps) {
   const [movies, setMovies] = useState<MovieProps[]>([]);
   const [selectedGenre, setSelectedGenre] = useState<GenreResponseProps>(
     {} as GenreResponseProps
@@ -65,3 +65,7 @@ export function Content({ selectedGenreId }: ContentProps) {
     </div>
   );
 }
+
+export const Content = memo(ContentMemoized, (prevProps, nextProps) => {
+  return prevProps.selectedGenreId === nextProps.selectedGenreId;
+});
